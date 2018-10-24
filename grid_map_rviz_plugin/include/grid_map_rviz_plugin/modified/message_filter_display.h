@@ -10,7 +10,9 @@
 
 #ifndef Q_MOC_RUN
 #include "grid_map_rviz_plugin/modified/frame_manager.h"
+#include <rviz/frame_manager.h>
 #include <rviz/message_filter_display.h>
+#include <tf2_ros/message_filter.h>
 #endif
 
 namespace grid_map_rviz_plugin {
@@ -23,9 +25,9 @@ class MessageFilterDisplayMod : public rviz::MessageFilterDisplay<MessageType>
 
   void onInitialize()
   {
-    MFDClass::tf_filter_ = new tf::MessageFilter<MessageType>(*MFDClass::context_->getTFClient(),
-                                                              MFDClass::fixed_frame_.toStdString(),
-                                                              10, MFDClass::update_nh_);
+    MFDClass::tf_filter_ = new tf2_ros::MessageFilter<MessageType>(*MFDClass::context_->getTF2BufferPtr(),
+                                                                   MFDClass::fixed_frame_.toStdString(),
+                                                                   10, MFDClass::update_nh_);
 
     MFDClass::tf_filter_->connectInput(MFDClass::sub_);
     MFDClass::tf_filter_->registerCallback(
