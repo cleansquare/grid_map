@@ -20,6 +20,8 @@ LineIterator::LineIterator(const grid_map::GridMap& gridMap, const Position& sta
   if (getIndexLimitedToMapRange(gridMap, start, end, startIndex)
       && getIndexLimitedToMapRange(gridMap, end, start, endIndex))
     initialize(gridMap, startIndex, endIndex);
+  else
+    iCell_ = nCells_;
 }
 
 LineIterator::LineIterator(const grid_map::GridMap& gridMap, const Index& start, const Index& end)
